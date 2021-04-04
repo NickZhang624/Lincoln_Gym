@@ -1,0 +1,76 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gym - {{role}} - Update Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="single">    
+    
+    <form action="/profile/update" method="POST" id='updateProfile'>
+        {% if user_type == 'member' %}
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Newsletter Subscription</th>
+                    <th>Payment Plan</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr>
+                    <td><input type="text" value={{user_details[2]}} name='firstname'></td>
+                    <td><input type="text" value={{user_details[3]}} name='surname'></td>
+                    <td><input type="email" value={{user_details[4]}} name='email'></td>
+                    <td><input type="date" value={{user_details[5]}} name='dob'></td>
+                    <td><select name='newsletter'>
+                        <option value={{user_details[7]}} selected name='newsletter'>{{user_details[7]}}(Current Choice)</option>
+                        <option value='False' name='newsletter'>False</option>
+                        <option value='True' name='newsletter'>True</option>
+                    </select></td>
+                    <td><select name='paymentplan'>
+                        <option value={{user_details[8]}} selected name='paymentplan'>{{user_details[8]}}(Current Plan)</option>
+                        <option value='Weekly' name='paymentplan'>Monthly</option>
+                        <option value='Monthly' name='paymentplan'>Weekly</option>
+                        <option value='Yearly' name='paymentplan'>Yearly</option>
+                        </select></td>
+                    </tbody>
+                </tr>
+        </table>
+        {% elif user_type == 'trainer' %}
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Personal Training Start Time</th>
+                    <th>Personal Training End Time</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr>
+                    <td><input type="text" value={{user_details[2]}} name='firstname'></td>
+                    <td><input type="text" value={{user_details[3]}} name='surname'></td>
+                    <td><input type="email" value={{user_details[4]}} name='email'></td>
+                    <td><input type="date" value={{user_details[5]}} name='dob'></td>
+                    <td><input type="time" value={{user_details[7]}} name='starttime'></td>
+                    <td><input type="time" value={{user_details[8]}} name='endtime'></td>
+                    <td><textarea rows="4" cols="50" name="description" form="updateProfile">
+                        {{user_details[9]}}</textarea>
+                </tr>
+        </table>
+        {% endif %}
+        <!--Reuiqred values & unchangeable-->
+        <input value={{user_details[0]}} name='userid' hidden>
+        <input value={{user_details[1]}} name='role' hidden></td>
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+{% endblock %}

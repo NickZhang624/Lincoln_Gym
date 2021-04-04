@@ -1,0 +1,449 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gym - {{role}} - Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="single">
+    {% if role == 'manager' %}
+    {% if user_type=='member' %}
+    <h1>Manage Member</h1>
+    <hr>
+    
+    <h3>{{user_details[2]}}'s Profile</h3>
+    <table class="table table-borderless" id="tableID">
+        <thead>
+            <tr>
+                <td width="20%">User ID</td>
+                <td>Role</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Email</td>
+                <td>Date of Birth</td>
+                <td>Joined Date</td>
+                <td>Left Date</td>
+                <td>Membership Expiry Date</td>
+                <td>Newsletter Subscription</td>
+                <td>Payment Plan</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{user_details[0]}}</td>
+                <td>{{user_details[1]}}</td>
+                <td>{{user_details[2]}}</td>
+                <td>{{user_details[3]}}</td>
+                <td>{{user_details[4]}}</td>
+                <td>{{user_details[5]}}</td>
+                <td>{{user_details[6]}}</td>
+                <td>{{user_details[9]}}</td>
+                <td>{{user_details[10]}}</td>
+                <td>{{user_details[7]}}</td>
+                <td>{{user_details[8]}}</td>
+            </tr>
+        </table>
+        <a class="btn btn-primary" href="/profile/update?userid={{user_details[0]}}&usertype={{user_type}}">Update Profile</a>
+        <a class="btn btn-danger" href="/profile/deactivate?userid={{user_details[0]}}&usertype={{user_type}}" onclick="return confirm('Are you sure you want deactivate this account?')">Deactivate User</a>
+        <a class="btn btn-success" href="/member/pay?memberid={{user_details[0]}}">Make a Payment</a>
+
+
+    <hr>
+    <h3 class="history">Activity History</h3>
+    <h4 class="h4center">Group Class</h4>
+    {% if groupclass|length == 0 %} 
+        <h6>This member has not booked any group exercise classes!
+        </h6>
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <th>Class Name</th>
+            <th>Sessions Booked</th>
+            <th>Sessions Attended</th>
+            <th>Attendance Rate</th>
+        </thead>
+        <tbody>
+            {% for i in groupclass %}
+            <tr>
+                <td>{{i[2]}}</td>
+                <td>{{i[4]}}</td>
+                <td>{{i[3]}}</td>
+                <td>{{i[5]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    
+    
+    <h4 class="h4center">Personal Training</h4>
+    {% if privateclass|length == 0 %} 
+    <h6>This member has not booked any private training
+    </h6>
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <th>Session Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Trainer</th>
+        </thead>
+        <tbody>
+            {% for i in privateclass %}
+            <tr>
+                <td>{{i[7]}}</td>
+                <td>{{i[8]}}</td>
+                <td>{{i[9]}}</td>
+                <td>{{i[5]}} {{i[6]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% else %}    
+    <h1>Manage Trainer</h1>
+    <hr>
+    
+    <h3>{{user_details[2]}}'s Profile</h3>
+    
+    <table class="table table-borderless" id="tableID">
+        <thead>
+            <tr>
+                <td width="20%">User ID</td>
+                <td>Role</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Email</td>
+                <td>Date of Birth</td>
+                <td>Joined Date</td>
+                <td>Left Date</td>
+                <td>Personal Training Start Time</td>
+                <td>Personal Training End Time</td>
+                <td>Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{user_details[0]}}</td>
+                <td>{{user_details[1]}}</td>
+                <td>{{user_details[2]}}</td>
+                <td>{{user_details[3]}}</td>
+                <td>{{user_details[4]}}</td>
+                <td>{{user_details[5]}}</td>
+                <td>{{user_details[6]}}</td>
+                <td>{{user_details[10]}}</td>
+                <td>{{user_details[7]}}</td>
+                <td>{{user_details[8]}}</td>
+                <td>{{user_details[9]}}</td>
+            </tr>
+    </table>
+    
+    <a class="btn btn-primary" href="/profile/update?userid={{user_details[0]}}&usertype={{user_type}}">Update Profile</a>
+    <a class="btn btn-danger" href="/profile/deactivate?userid={{user_details[0]}}&usertype={{user_type}}" onclick="return confirm('Are you sure you want deactivate this account?')">Deactivate User</a>
+
+    <hr>
+    <h3 class="history">Activity History</h3>
+    <h4 class="h4center">Group Class</h4>
+    {% if groupclass|length == 0 %} 
+        <h6>This trainer does not have any group classes
+        </h6>
+    {% else %}
+    <table class="table table-striped"> 
+        <thead>
+            <th>Class Name</th>
+            <th>Sessions Booked</th>
+            <th>Attendance Rate</th>
+        </thead>
+        <tbody>
+            {% for i in groupclass %}
+            <tr>
+                <td>{{i[2]}}</td>
+                <td>{{i[3]}}</td>
+                <td>{{i[4]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    
+    <h4 class="h4center">Personal Training</h4>
+    {% if privateclass|length == 0 %} 
+        <h6>This trainer does not have any personal training bookings
+        </h6>
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <th>Period</th>
+            <th>Bookings</th>
+        </thead>
+        <tbody>
+            {% for i in privateclass %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+    {% endif %}
+
+    {% elif role =='member' %}
+    <h2>{{user_details[2]}}'s Profile</h2>
+    <hr>
+
+    <table class="table table-borderless" id="tableID">
+        <thead>
+            <tr>
+                <td width="25%">User ID</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Email</td>
+                <td>Date of Birtd</td>
+                <td>Joined Date</td>
+                <td>Newsletter Subscription</td>
+                <td>Payment Plan</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{user_details[0]}}</td>
+                <td>{{user_details[2]}}</td>
+                <td>{{user_details[3]}}</td>
+                <td>{{user_details[4]}}</td>
+                <td>{{user_details[5]}}</td>
+                <td>{{user_details[6]}}</td>
+                <td>{{user_details[7]}}</td>
+                <td>{{user_details[8]}}</td>
+            </tr>
+    </table>
+    <a class="btn btn-primary" href="/profile/update?userid={{user_details[0]}}&usertype={{user_type}}">Update Profile</a>
+
+
+
+
+    <hr>
+    <h3 class="history">Activity History</h3>
+    <h4 class="h4center">Group Class</h4>
+    <!-- Display message if member have no upcoming classes-->
+    {% if groupclass|length == 0 %} 
+        <h6>You don't have any group exercise coming up</h6>
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <th>Class Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+        </thead>
+        <tbody>
+            {% for i in groupclass %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}} - {{i[3]}}</td>
+                <td>{{i[4]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    
+    <h4 class="h4center">Personal Training</h4>
+    {% if privateclass|length == 0 %} 
+        <h6>You don't have any private training coming up
+        </h6>
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <th>Session Date</th>
+            <th>Time</th>
+            <th>Trainer</th>
+        </thead>
+        <tbody>
+            {% for i in privateclass %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}} - {{i[2]}}</td>
+                <td><a href="/profile?userid={{i[0]}}">{{i[3]}} {{i[4]}}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+
+    {% elif role == 'trainer' %}
+    {% if user_type=='trainer' %}
+    <h2>- {{user_details[2]}}'s Profile</h2>
+    <hr>
+
+    <table class="table table-borderless" id="tableID">
+        <thead>
+            <tr>
+                <td width="20%">User ID</td>
+                <td>Role</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Email</td>
+                <td>Date of Birtd</td>
+                <td>Joined Date</td>
+                <td>Left Date</td>
+                <td>Personal Training Start Time</td>
+                <td>Personal Training End Time</td>
+                <td>Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{user_details[0]}}</td>
+                <td>{{user_details[1]}}</td>
+                <td>{{user_details[2]}}</td>
+                <td>{{user_details[3]}}</td>
+                <td>{{user_details[4]}}</td>
+                <td>{{user_details[5]}}</td>
+                <td>{{user_details[6]}}</td>
+                <td>{{user_details[10]}}</td>
+                <td>{{user_details[7]}}</td>
+                <td>{{user_details[8]}}</td>
+                <td>{{user_details[9]}}</td>
+
+            </tr>
+    </table>
+    <a class="btn btn-primary" href="/profile/update?userid={{user_details[0]}}&usertype={{user_type}}">Update Profile</a>
+    
+    <hr>
+    <h3 class="history">Activity History</h3>
+    <h4 class="h4center">Group Class</h4>
+    {% if groupclass|length == 0 %} 
+        <h6>You don't have any group class coming up
+        </h6>
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <th>Class Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+        </thead>
+        <tbody>
+            {% for i in groupclass %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}} - {{i[3]}}</td>
+                <td>{{i[4]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    
+    <h4 class="h4center">Personal Training</h4>
+    {% if privateclass|length == 0 %} 
+    <h6>You don't have any private training coming up
+    </h6>
+    {% else %}    
+    <table class="table table-striped">
+        <thead>
+            <th>Session Date</th>
+            <th>Time</th>
+            <th>Member</th>
+        </thead>
+        <tbody>
+            {% for i in privateclass %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}} - {{i[2]}}</td>
+                <td>{{i[3]}} {{i[4]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% elif user_type=='member' %} 
+    <h2>View {{user_type}} - {{user_details[2]}}'s Profile</h2>
+    <hr>
+
+    <table class="table table-borderless" id="tableID">
+        <thead>
+            <tr>
+                <td width="20%">User ID</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Email</td>
+                <td>Date of Birth</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{user_details[0]}}</td>
+                <td>{{user_details[2]}}</td>
+                <td>{{user_details[3]}}</td>
+                <td>{{user_details[4]}}</td>
+            </tr>
+    </table>
+
+
+    <hr>
+    <h3 class="history">Activity History</h3>
+    <h4 class="h4center">Group Class</h4>
+    <!-- Display message if member have no upcoming classes-->
+    {% if groupclass|length == 0 %} 
+        <h6>This member doesn't have any group exercise coming up
+        </h6>
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <th>Class Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+        </thead>
+        <tbody>
+            {% for i in groupclass %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}} - {{i[3]}}</td>
+                <td>{{i[4]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    
+    <h4 class="h4center">Personal Training</h4>
+    {% if privateclass|length == 0 %} 
+        <h6>This member doesn't have any private training coming up
+        </h6>
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <th>Session Date</th>
+            <th>Time</th>
+            <th>Trainer</th>
+        </thead>
+        <tbody>
+            {% for i in privateclass %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}} - {{i[2]}}</td>
+                <td>{{i[3]}} {{i[4]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}

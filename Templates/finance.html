@@ -1,0 +1,238 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Reports
+{% endblock %}
+
+{% block content %}
+<div class="single">
+  {% if role == 'manager' %}
+  <h1>Reports</h1>
+  <hr>
+
+  <form action="/finance" method="POST" id='finance'>
+  
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for='startdate'>Start Date: </label>          
+        <input class="form-control"  type="date" name='startdate' id='startdate' value={{startdate}} required>          
+      </div>
+      <div class="form-group col-md-3">
+        <label for='enddate'>End Date: </label>        
+        <input class="form-control" type="date" name='enddate' id='enddate' value={{enddate}} required>        
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for='report'>Report Type: </label>        
+
+        <select class="form-select" name='report' id='report' required>
+          <option value="" selected></option>
+            {% if report=='usage' %}
+            <option value='revenue'>Revenue</option>
+            <option value='usage' selected>Gym Usage</option>
+            <option value='popular'>Popular Classes</option>
+            {% elif report=='popular' %}
+            <option value='revenue'>Revenue</option>
+            <option value='usage'>Gym Usage</option>
+            <option value='popular' selected>Popular Classes</option>
+            {% else %}
+            <option value='revenue' selected>Revenue</option>
+            <option value='usage'>Gym Usage</option>
+            <option value='popular'>Popular Classes</option>
+            {% endif %}
+        </select>
+      </div>
+    </div>
+    
+    <input id="btn" type="submit" value='Search'>
+  </form>
+
+
+    {% if report %}
+    <h6>The {{report}} between {{startdate}} - {{enddate}}</h6>
+    {% if report == 'revenue' %}
+    <div class="dual">
+        <table class='table table-hover table-striped'>
+            <thead>
+                {% for col in cols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </thead>
+            <tbody>
+                {% for r in results %} 
+                <tr>
+                    <td>{{r[0]}}</td>
+                    <td>{{r[1]}}</td>
+                    <td>{{r[2]}}</td>
+                    <td>{{r[3]}}</td>
+                    <td>{{r[4]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody> 
+        </table>    
+    </div>
+    <div class = 'dual'>
+        <h6>{{title}}</h6>
+        <canvas id="chart" width="600" height="400"></canvas>
+        
+        <script>
+          var pieData = [
+            {% for values, labels, colors in set %}
+              {
+                value: {{values}},
+                label: "{{labels}}",
+                color: "{{colors}}"
+              },
+            {% endfor %}
+          ];
+    
+          // get bar chart canvas
+          var mychart = document.getElementById("chart").getContext("2d");
+          steps = 10
+          max = {{ max }}
+    
+          // draw pie chart
+          new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);
+        </script>
+    </div>
+
+    {% elif report == 'usage' %} 
+    <div class="dual">
+        <table class='table table-hover table-striped'>
+            <thead>
+                <th>Visit Type</th>
+                <th>Total Visits</th>
+            </thead>
+            <tbody>
+                {% for l, v in set %} 
+                <tr>
+                    <td>{{l}}</td>
+                    <td>{{v}}</td>
+                </tr>
+                {% endfor %}
+            </tbody> 
+        </table>    
+    </div>
+    <div class = 'dual'>
+        <span>{{title}}</span>
+        <canvas id="chart" width="600" height="400"></canvas>
+        <script>
+          // bar chart data
+          var barData = 
+          {
+            labels : [
+              {% for item in labels %}
+               "{{ item }}",
+              {% endfor %}
+        ],
+    
+            datasets : [{
+              fillColor: "rgba(151,187,205,0.2)",
+              strokeColor: "rgba(151,187,205,1)",
+              pointColor: "rgba(151,187,205,1)",
+              data : [
+                {% for item in values %}
+                   "{{ item }}",
+                  {% endfor %}
+            ]
+              }
+            ]
+          }
+
+    
+         // get bar chart canvas
+         var mychart = document.getElementById("chart").getContext("2d");
+    
+           steps = 10
+           max = {{max}}
+    
+         // draw bar chart
+         new Chart(mychart).Bar(barData, {
+           scaleOverride: true,
+           scaleSteps: steps,
+           scaleStepWidth: Math.ceil(max / steps),
+           scaleStartValue: 0,
+           scaleShowVerticalLines: true,
+           scaleShowGridLines : true,
+           barShowStroke : true,
+           scaleShowLabels: true
+           }
+         );
+        </script>
+        </div>
+    {% else %}
+    <div class="dual">
+        <table class='table table-hover table-striped'>
+            <thead>
+                <th>Group Class Name</th>
+                <th>Total Bookings</th>
+            </thead>
+            <tbody>
+                {% for v in results %} 
+                <tr>
+                    <td>{{v[1]}}</td>
+                    <td>{{v[2]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody> 
+        </table>    
+    </div>
+    <div class = 'dual'>
+        <span>{{title}}</span>
+        <canvas id="chart" width="600" height="400"></canvas>
+        <script>
+          // bar chart data
+          var barData = 
+          {
+            labels : [
+              {% for item in labels %}
+               "{{ item }}",
+              {% endfor %}
+        ],
+    
+            datasets : [{
+              fillColor: "rgba(151,187,205,0.2)",
+              strokeColor: "rgba(151,187,205,1)",
+              pointColor: "rgba(151,187,205,1)",
+              data : [
+                {% for item in values %}
+                   "{{ item }}",
+                  {% endfor %}
+            ]
+              }
+            ]
+          }
+
+    
+         // get bar chart canvas
+         var mychart = document.getElementById("chart").getContext("2d");
+    
+           steps = 10
+           max = {{max}}
+    
+         // draw bar chart
+         new Chart(mychart).Bar(barData, {
+           scaleOverride: true,
+           scaleSteps: steps,
+           scaleStepWidth: Math.ceil(max / steps),
+           scaleStartValue: 0,
+           scaleShowVerticalLines: true,
+           scaleShowGridLines : true,
+           barShowStroke : true,
+           scaleShowLabels: true
+           }
+         );
+        </script>
+        </div>
+    {% endif %}
+
+    </div>
+
+    {% endif %}
+    {% else %}
+    <span>You do not have the permission to view this page</span>>
+    {% endif %}
+</div>
+
+{% endblock %}

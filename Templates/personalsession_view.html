@@ -1,0 +1,42 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gym - {{role}} - All PT Sessions
+{% endblock %}
+
+{% block content %}
+
+<!-- remove SQL Queries -->
+
+<div class="container">
+
+    <h1>All Personal Training Sessions</h1>
+    <hr>
+    
+    <form action="/personaltraining" method="GET" id='personalTraining'>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Member ID</td>
+                    <td>Member Name</td>
+                    <td>PT Rates</td>
+                    <td>Personl Session Date</td>
+                    <td>Personl Session Time</td>
+                    <td>Note</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in personalsessiondetails %}
+                <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[1]}} {{i[2]}}</td>
+                    <td>{{i[3]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td>{{i[5]}} ~ {{i[6]}}</td>
+                    <td>{{i[7]}}</td>
+                </tr>
+                {% endfor %}
+        </table>
+    </form>
+</div>
+
+{% endblock %}

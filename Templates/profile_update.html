@@ -1,0 +1,118 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gym - {{role}} - Update Profile
+{% endblock %}
+
+{% block content %}
+
+
+<h1 class="maintitle"> Update {{user_details[2]}}'s Profile</h1>
+<hr>
+
+<form action="/profile/update" method="POST" id='updateProfile'>
+    
+    {% if user_type == 'member' %}
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="inputFirstname">First Name: </label>
+            <input class="form-control" type="text" value={{user_details[2]}} name='firstname'>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="surname">Last Name: </label>
+            <input class="form-control" type="text" value={{user_details[3]}} name='surname'>
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="email">Email: </label>
+            <input class="form-control" type="email" value={{user_details[4]}} name='email'>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="dob">Date of Birth: </label>
+            <input class="form-control" type="date" value={{user_details[5]}} name='dob'>
+        </div>        
+    </div>
+
+    
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="paymentplan">Payment Plan: </label>
+            <select class="form-select" name='paymentplan'>
+                <option value={{user_details[8]}} selected name='paymentplan'>{{user_details[8]}}(Current Plan)</option>
+                <option value='Weekly' name='paymentplan'>Monthly</option>
+                <option value='Monthly' name='paymentplan'>Weekly</option>
+                <option value='Yearly' name='paymentplan'>Yearly</option>
+            </select>
+        </div>
+    </div>
+    
+    
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="newsletters">Newsletters Subscription: </label>
+            <select class="form-select" name='newsletter'>
+                <option value={{user_details[7]}} selected name='newsletter'>{{user_details[7]}}(Current Choice)</option>
+                <option value='True' name='newsletter'>Yes</option>
+                <option value='False' name='newsletter'>No</option>
+            </select>
+        </div>                
+    </div>
+
+
+    {% elif user_type == 'trainer' %}
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="inputFirstname">First Name: </label>
+            <input class="form-control" type="text" value={{user_details[2]}} name='firstname'>            
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="surname">Last Name: </label>
+            <input class="form-control" type="text" value={{user_details[3]}} name='surname'>
+        </div>
+    </div>
+
+                
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="email">Email: </label>
+            <input class="form-control" type="email" value={{user_details[4]}} name='email'>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="dob">Date of Birth: </label>
+            <input class="form-control" type="date" value={{user_details[5]}} name='dob'>
+        </div>        
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="ptstarttime">Personal Training Start Time: </label>
+            <input class="form-control" type="time" value={{user_details[7]}} name='starttime'>                
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="ptendtime">Personal Training End Time: </label>
+            <input class="form-control" type="time" value={{user_details[8]}} name='endtime'>
+        </div>    
+
+        <div class="form-group col-md-3">
+            <label for="description">Description: </label>
+            <textarea class="form-control" rows="4" cols="50" name="description" form="updateProfile">
+                {{user_details[9]}}</textarea>
+        </div>    
+    </div>
+    {% endif %}
+
+        <!--Required values & unchangeable-->
+        <input value={{user_details[0]}} name='userid' hidden>
+        <input value={{user_details[1]}} name='role' hidden>
+        <button id="btn" type="submit" value="Update">Update</button>
+        <a class="btn btn-secondary" href="/profile">Back to Profile</a>
+        
+</form>
+
+{% endblock %}

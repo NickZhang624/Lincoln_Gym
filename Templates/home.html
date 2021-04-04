@@ -1,0 +1,272 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gym
+{% endblock %}
+
+
+{% block content %} 
+
+
+<!-- Our classes -->
+<section class="schedule" id="schedule">
+	<div class="container">
+		<div class="content">
+			<div class="box text wow slideInLeft">
+				<h2>Our Classes</h2>	
+				<p>LESSMILLS<span> BODYATTACK</span></p>
+				<p>LESSMILLS<span> BODYPUMP</span></p>
+				<p>LESSMILLS<span> BODYSTEP</span></p>
+				<p>LESSMILLS<span> GRIT</span></p>
+				<p>LESSMILLS<span> RPM</span></p>
+				<p>LESSMILLS<span> TONE</span></p>
+				<p>LINCOLN<span> ACTIVE SENIORs</span></p>
+				<p>LINCOLN<span> YOGA</span></p>
+			</div>
+			<div class="box timing wow slideInRight">
+				<img src="{{ url_for('static', filename = 'images/timetable.png') }}" alt="schedule">
+			</div>			  
+		</div>
+	</div>
+</section>
+<!-- End classes -->
+
+
+<!-- Start trainers -->
+<section class="trainers" id="trainers">
+	<div class="container">
+		<div class="content">
+			<div class="box img wow slideInLeft">
+				<img src="{{ url_for('static', filename = 'images/trainers.jpg') }}" alt="trainers">
+			</div>
+			<div class="box text wow slideInRight">
+				<h2>Our trainers</h2>
+				<div class="class-items">
+				<div class="item wow bounceInUp">
+					<div class="item-text">
+						<h4>Arthur Dodson</h4>
+						<p>See more</p>
+					</div>
+					<div class="item-text">
+						<h4>Bianca Mcguire</h4>
+						<p>See more</p>
+					</div>
+					<div class="item-text">
+						<h4>Burton Vance</h4>
+						<p>See more</p>
+					</div>
+					<div class="item-text">
+						<h4>Caldwell Lancaster</h4>
+						<p>See more</p>
+					</div>
+					<div class="item-text">
+						<h4>Clinton Winters</h4>
+						<p>See more</p>
+					</div>
+				</div> 
+				<div class="item wow bounceInUp">
+					<div class="item-text">
+						<h4>Denton Beasley</h4>
+						<p>See more</p>
+					</div>
+					<div class="item-text">
+						<h4>Dillon Phelps</h4>
+						<p>See more</p>
+					</div>
+					<div class="item-text">
+						<h4>Holly Reid</h4>
+						<p>See more</p>
+					</div>
+					<div class="item-text">
+						<h4>Ima Mckinney</h4>
+						<p>See more</p>
+					</div>
+					<div class="item-text">
+						<h4>Jade Cote</h4>
+						<p>See more</p>
+					</div>
+				</div>
+				</div>
+					<div class="class-items">
+						<div class="item wow bounceInUp">
+						<div class="item-text">
+							<h4>JuanPe Abu</h4>
+							<p>See more</p>
+						</div>
+						<div class="item-text">
+							<h4>Leonard Floyd</h4>
+							<p>See more</p>
+						</div>
+						<div class="item-text">
+							<h4>Mallory Patton</h4>
+							<p>See more</p>
+						</div>
+						<div class="item-text">
+							<h4>Marshall Hudson</h4>
+							<p>See more</p>
+						</div>
+						<div class="item-text">
+							<h4>Monique Cole</h4>
+							<p>See more</p>
+						</div>
+						</div> 
+						<div class="item wow bounceInUp">
+						<div class="item-text">
+							<h4>Mufutau Mcbride</h4>
+							<p>See more</p>
+						</div>
+						<div class="item-text">
+							<h4>Naida Schmidt</h4>
+							<p>See more</p>
+						</div>
+						<div class="item-text">
+							<h4>Norman Barlow</h4>
+							<p>See more</p>
+						</div>
+						<div class="item-text">
+							<h4>Rachel Bergerr</h4>
+							<p>See more</p>
+						</div>
+						<div class="item-text">
+							<h4>Whoopi Sandoval</h4>
+							<p>See more</p>
+						</div>
+					</div>
+						</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Classes -->
+
+
+<!-- Membership options -->
+<section class="membership-package" id="membership">
+	<div class="container">
+		<h2>Membership Options</h2>
+		<p class="title-p">Choose the package that suits you best!</p>
+		<div class="content">
+			<div class="box wow bounceInUp">
+				<div class="inner">
+					<div class="membership-tag">
+						$20/Week
+					</div>
+					<div class="img">
+						<img src="{{ url_for('static', filename = 'images/price1.jpg') }}" alt="membership">
+					</div>
+					<div class="text">
+						<h3>Weekly Membership</h3>
+						<p>Get Free WiFi</p>
+						<p>Week to Week</p>
+						<a href="" class="btn">Join Now</a>
+					</div>
+				</div>
+			</div>
+			<div class="box wow bounceInUp" data-wow-delay="0.2s">
+				<div class="inner">
+					<div class="membership-tag">
+						$80/Month
+					</div>
+					<div class="img">
+						<img src="{{ url_for('static', filename = 'images/price2.jpg') }}" alt="membership">
+					</div>
+					<div class="text">
+						<h3>Monthly membership</h3>
+						<p>Get Free WiFi</p>
+						<p>Month to Month</p>
+						<p>Service Locker Rooms</p>
+						<a href="" class="btn">Join Now</a>
+					</div>
+				</div>
+			</div>
+			<div class="box wow bounceInUp" data-wow-delay="0.4s">
+				<div class="inner">
+					<div class="membership-tag">
+						$900/Year
+					</div>
+					<div class="img">
+						<img src="{{ url_for('static', filename = 'images/price3.jpg') }}" alt="membership">
+					</div>
+					<div class="text">
+						<h3>Yearly membership</h3>
+						<p>Get Free WiFi</p>
+						<p>Year to Year</p>
+						<p>No Time Restrictions</p>
+						<p>Service Locker Rooms</p>
+						<a href="" class="btn">Join Now</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Membership options -->
+
+<!-- Contact us -->
+<section class="contact" id="contact">
+	<div class="container">
+		<div class="content">
+			<div class="box form wow slideInLeft">
+			<form>
+				<input type="text" placeholder="Enter Name">
+				<input type="email" placeholder="Enter Email">
+				<input type="text" placeholder="Enter Mobile">
+				<textarea placeholder="Enter Message"></textarea>
+				<button type="submit" class="btn">Send Message</button>
+			</form>
+			</div>
+			<div class="box text wow slideInRight">
+				<h2>Get Connected with Lincoln Gym</h2>
+					<div class="info">
+					<ul>
+						<li><span class="fa fa-map-marker"></span> Ellesmere Junction Road/Springs Road</li>
+						<li><span class="fa fa-phone"></span>  0800 10 60 10</li>
+						<li><span class="fa fa-envelope"></span> grow@lincoln.ac.nz</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Contact us-->
+
+
+<!-- Login -->
+<section class="login" id="login">
+	<div class="container">
+		<div class="content">
+			<div class="box text wow slideInLeft">
+					<h2>If you are a user, click here to login</h2>
+					<form action="/login" method="POST">
+						<div class="row">
+							<div class="form-group col-md-4">                
+								<label for="username">Username: </label>
+								<input class="form-control" type="text" maxlength="20" name="username" placeholder="username"/>                
+							</div>
+							<div class="form-group col-md-4">
+								<label for="password">Password: </label>                
+								<input class="form-control" type="password" minlength="4" name="password" placeholder="xxxx"/>                  
+							</div>
+						</div>
+						<div class="form-group">        				
+							<input type="submit" class="btn"/>
+						</div>
+					</form>
+					<p>Or talk to our manager to register now</p>
+			</div>
+			<div class="logo">
+				<a href="/">Lincoln <span>Gym</span></a>
+			</div>
+
+		</div>
+	</div>
+</section>
+<!-- End Login -->
+{% endblock %}
+
+	
+
+
+
+
+

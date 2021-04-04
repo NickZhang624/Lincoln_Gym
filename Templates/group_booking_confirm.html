@@ -1,0 +1,47 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - Trainer - Search Member
+{% endblock %}
+
+{% block content %}
+<div class="single">
+    {% if role == 'member' %}
+    <h1>Group Booking Confirm</h1>
+    <hr>
+
+    <h6>Please confirm your booking details:</h6>
+    <form action="/member/group/booking" method="POST" id='groupBookingConfirm'>
+        <table class='table table-striped'>
+        <tr>
+            <td>Group Class Name</td>
+            <td>{{classname}}</td>
+        </tr>
+        <tr>
+            <td>Trainer Name</td>
+            <td>{{firstname}} {{lastname}}</td>
+        </tr>
+        <tr>
+            <td>Group Session Date</td>
+            <td>{{date}}</td>
+        </tr>
+        <tr>
+            <td>Group Session Time</td>
+            <td>{{starttime}} {{endtime}}</td>
+        </tr>
+        <tr>
+            <td>Note</td>
+            <td><textarea rows="4" name='note' placeholder="Leave a note to the trainer"></textarea></td>
+        </tr>
+        </table>
+
+        <input name='groupsessionid' hidden value={{groupsessionid}}>
+        <input name='memberid' hidden value={{memberid}}>
+        <input type="submit" value="Confirm">
+        </form>
+    {% else %} 
+
+    <h6>Only members can book a group training session</h6>
+    {% endif %}
+</div>
+
+{% endblock %}

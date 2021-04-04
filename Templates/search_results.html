@@ -1,0 +1,52 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Search {{user_type}}
+{% endblock %}
+
+{% block content %}
+<div class="single">        
+    <h1>Lists of users</h1>    
+
+    <table class="table table-hover table-striped">        
+        <thead>
+            <tr>
+                {% for col in db_cols %}
+                <th>{{col}}</th>
+                {% endfor %}
+                {% if user_type == 'member' %}
+                <th>Member ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                
+                {% else %} 
+                <th>Trainer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                {% endif %}
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in results %}
+            <tr> 
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}}</td>
+                {# re update#}
+                <td><a class="btn btn-primary" href="/profile?userid={{i[0]}}">View Details</a></td>
+                {% if role == 'manager' %}
+                <td><a class="btn btn-primary" href="/profile/update?userid={{i[0]}}&usertype={{user_type}}">Update</a></td>
+                <td><a class="btn btn-danger" href="/profile/deactivate?userid={{i[0]}}&usertype={{user_type}}" onclick="return confirm('Are you sure you want deactivate this account?')">Deactivate</a></td>
+                {% if user_type == 'member' %}
+                <td><a class="btn btn-success" href="/member/pay?memberid={{i[0]}}">Make a Payment</a></td>
+                {% endif %}                
+                {% endif %}
+            </tr>
+            {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Attendance
+{% endblock %}
+
+{% block content %}
+<div class="single">
+    <h1>Update Attendance</h1>
+    <hr>
+
+    <table class='table table-hover table-striped'>
+        <thead>
+            {% if role == 'member' %}
+            <th>Class Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            {% else %}
+            <th>Member Name</th>
+            {% endif %}
+            <th>Attendance Status</th>
+        </thead>
+        <tbody>
+            {% for i in results %}
+            <tr>
+                {% if role == 'member' %}
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}}</td>
+                <td>{{i[3]}} - {{i[4]}}</td>
+                {% else %}
+                <th>{{i[7]}} {{i[8]}}</th>
+                {% endif %}    
+                <td>
+                    <form action="/member/attendance" method="POST" id='attendance'>
+                        <select name='status' onchange="this.form.submit()">
+                            {% if i[5] == 'Attended' %}
+                            <option value=""></option>
+                            <option value='Attended' SELECTED>Attended</option>
+                            <option value="Absent">Absent</option>
+                            {% elif i[5] == '' %}
+                            <option value="" selected></option>
+                            <option value='Attended' >Attended</option>
+                            <option value="Absent">Absent</option>
+                            {% else %} 
+                            <option value=""></option>
+                            <option value='Attended'>Attended</option>
+                            <option value="Absent" selected>Absent</option>
+                            {% endif %}
+                        </select>
+                        <input hidden value={{i[0]}} name='sessionid'>
+                        <input hidden value={{i[6]}} name='memberid'>
+                        {% if role == 'trainer' %} 
+                        <input hidden value={{sessionid}} name='groupsession'>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

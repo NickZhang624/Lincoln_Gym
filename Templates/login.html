@@ -1,0 +1,14 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Oops something went wrong
+{% endblock %}
+
+{% block content %}
+<form action="/login" method="POST">
+    <label for="username">User Name: </label>
+    <input type="text" maxlength="20" name="username" /><br>
+    <label for="password">Password: </label>
+    <input type="password" minlength="4" name="password" /><br>
+    <input type="submit"> 
+</form>
+{% endblock %}

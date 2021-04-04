@@ -1,0 +1,79 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Newsletters
+{% endblock %}
+
+{% block content %}
+<style>
+    #myBar {
+  width: 2%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center; /* To center it horizontally (if you want) */
+  line-height: 30px; /* To center it vertically */
+  color: white;
+}
+</style>
+
+<div class="single">
+    <h1>Newsletters</h1>
+    <hr>
+
+    <form action="/newsletter" method="POST" id='SendingNewsletter'>
+
+      <div class="row">            
+        <div class="form-group col-md-3">
+          <label>Subject</label>
+          <input class="form-control" name="subject" placeholder="Subject" required></input>
+        </div>
+      </div>
+
+      <div class="row">            
+        <div class="form-group col-md-3">
+          <label>Content</label>
+          <textarea rows="4" cols="50" class="form-control" name="content" placeholder="Email content" required></textarea>      
+        </div>
+      </div>
+
+      <div class="row">                  
+        <div class="form-group col-md-3">
+          {% for i in select_result %}
+            <label>Email is sening to: {{i[0]}} Subscribers</label>
+          {% endfor %}        
+        </div>  
+      </div>
+
+      <input id="btn" type="submit" value="Send" onclick="move()">
+    </form>
+    
+    <div id="myProgress">
+        <div id="myBar">0%</div>
+    </div>
+</div>
+
+<script>
+    var i = 0;
+    function move() {
+      if (i == 0) {
+        i = 1;
+        var elem = document.getElementById("myBar");
+        var width = 10;
+        var id = setInterval(frame, 90);
+        function frame() {
+          if (width >= 100) {
+            clearInterval(id);
+            i = 0;
+          } else {
+            width++;
+            elem.style.width = width + "%";
+            elem.innerHTML = width + "%";
+          }
+        }
+      }
+    };
+
+</script>
+
+{% endblock %}
+
+

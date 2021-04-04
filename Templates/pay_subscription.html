@@ -1,0 +1,95 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Pay Subscription
+{% endblock %}
+
+{% block content %}
+<div class="single">
+
+    <h1>Pay Subscription</h1>
+    <hr>
+
+    {% if role == 'manager' %}
+    {% if overdue=='Y' %} 
+    <h6>This membership expired on {{duedate}} because the member has overdue payment of ${{price}}</h6>
+    <h3 class="renewextend"><u>Renew membership:</u></h3>
+
+    {% else %}
+    <h6>This membership expires on {{duedate}}. The member does not have any outstanding payments currently.</h6>
+    <h3 class="renewextend"><u>Extend membership:</u></h3>
+    {% endif %}
+
+    {% else %}
+    {% if overdue=='Y' %} 
+    <h6 class="overdue" >Your membership expired on {{duedate}} because you have overdue payment of ${{price}}. You must renew your membership to continue your access to the gym</h6>
+    <h3 class="renewextend"><u>Renew membership:</u></h3>
+
+    {% else %}
+    <h6>Your membership expires on {{duedate}}. You don't have any outstanding payments currently.</h6>    
+    <h3 class="renewextend"><u>Extend membership:</u></h3>
+    
+    {% endif %}
+    {% endif %}
+    
+
+    <form action='/member/pay' method="POST" id='pay_subscription'>
+        <table class="table table-borderless">
+            <tr>
+                <td>Subscription Plan:</td>
+                <td>{{plan}}</td>
+            </tr>
+            <tr>
+                <td>Unit Price:</td>
+                <td>{{price}}</td>
+            </tr>
+            <tr>
+                <td>Number of
+                    {% if plan == 'Weekly' %}
+                    Weeks
+                    {% elif plan == 'Monthly' %}
+                    Months
+                    {% else %}
+                    Years
+                    {% endif %}
+                </td>
+                <td><input type="number" value=1 name="unit" min="1" id='unit' oninput="multiplyBy()"></td>
+            </tr>
+            <tr>
+                <td>Total Due</td>
+                <td><span id = "cost"></span>
+                    <input hidden id='paymentprice' name='paymentprice'>
+                    <input hidden name='paymentid' value={{paymentid}}>
+                    <input hidden name='price' value={{price}}>
+                    <input hidden name='duedate' value={{duedate}}>
+                    <input hidden name="plan" value={{plan}}>
+                    <input hidden name="overdue" value={{overdue}}>
+                    <input hidden name="memberid" value={{memberid}}>
+                </td>
+            </tr>
+            <tr>
+                <td>Credit Card #</td>
+                <td><input name='creditcard' type="text" placeholder="XXXX-XXXX-XXXX-XXXX" required minlength="19" maxlength="19"></td>
+            </tr>
+            <tr>
+                <td>Expiry Date</td>
+                <td><input name='expiry' type="text" placeholder="MM/YY" required minlength="5" maxlength="5"></td>
+            </tr>
+            <tr>
+                <td>CVV</td>
+                <td><input name='expiry' type="text" placeholder="XXX" required minlength="3" maxlength="3"></td>
+            </tr>
+        </table>
+        <input id="btn" type="submit" value='Pay Now'>
+    </form>
+    <script>
+        function multiplyBy()
+    {
+            num1 = document.getElementById("unit").value;
+            num2 ={{price|safe}};
+            document.getElementById("cost").innerHTML = num1 * num2
+            document.getElementById('paymentprice').value = num1 * num2;
+    }
+    </script>
+</div>
+
+{% endblock %}

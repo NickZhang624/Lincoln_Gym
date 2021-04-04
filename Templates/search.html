@@ -1,0 +1,117 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {#{Role}#} - Search {#{user_type}#}
+{% endblock %}
+
+{% block content %}
+<div class="single">        
+
+    {% if role == 'trainer' %}
+    <a class="btn btn-primary" href='/profile/all?usertype=member'>See all members in my classes</a><!--Function to be added-->
+    {% endif %}
+    
+    <h1>Search {{user_details}} Profile</h1>
+    <hr>
+
+    <form action="/search" method="POST" id="search">    
+        <h6>Please fill in only *ONE* field</h6>            
+        
+        <div class="row">            
+            <div class="form-group col-md-3">
+                <label for='firstname'>First Name: </label>
+                <input class="form-control" type="text" name="firstname" placeholder="First Name" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for='surname'>Last Name: </label>
+                <input class="form-control" type="text" name="surname" placeholder="Last Name" value="">                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for='userid'>User ID: </label>
+                <input class="form-control" type="text" name="userid" placeholder="User ID" value="">
+            </div>
+        </div>
+
+            
+        {% if role=='trainer' %}
+        <input hidden name='paymentplan' value="%" selected>
+        {% endif %}
+
+        {% if role=='manager' %}
+
+        {% if user_type=='member' %}
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for='paymentplan'>Payment Plan: </label>                                        
+                <select class="form-select" name="paymentplan">
+                    <option value="" selected></option>
+                    <option value="Weekly">Weekly</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
+                </select>
+                <input value='member' hidden name='usertype'><br>
+            </div>            
+        </div>
+
+        {% elif user_type=='trainer' %}
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for='availability'>Private Training availability: </label>
+                <select class="form-select" name="availability">
+                    <option value="" selected></option>
+                    {% for i in availability %}
+                    <option value="{{i[0]}}">{{i[0]}}-{{i[1]}}</option>
+                    {% endfor %}
+                </select>
+                <input value='trainer' hidden name='usertype'>       
+            </div>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <input value='member' hidden name='usertype'>
+        {% endif %}
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for='groupclass'>Group Class: </label>
+                <select class="form-select" name="groupclass">
+                    <option value="" selected></option>
+                    {% for g in group_classes %}
+                    <option value={{g[0]}}>{{g[1]}}</option> 
+                    {% endfor %}
+                </select>
+            </div>            
+
+            <div class="form-group col-md-3">
+                <label for='privateclass'>Private Class: </label>
+                <select class="form-select" name="privateclass">
+                    <option value="" selected></option>                        
+                    {% for p in private_classes %} <!--pass list of class names into this-->
+                    <option value={{p[0]}}>{{p[1]}}{{p[2]}}{{p[3]}}{{p[4]}}{{p[5]}}</option> <!--NEEDS TWEAKING-->
+                    {% endfor %}
+                </select>                    
+            </div>
+        </div>
+
+        <input class="btn btn-primary" type="button" value='Search' onclick="validateAndSend()">
+        <input class="btn btn-secondary" type="reset">        
+
+        <script>
+            function validateAndSend() {
+                if (search.groupclass.value != '' && search.privateclass.value != '') {
+                    alert('You can only choose one group or private class');
+                    return false;
+                }
+                else {
+                    search.submit();
+                }
+            }
+        </script>
+
+    </form>
+</div>
+
+{% endblock %}

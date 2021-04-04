@@ -1,0 +1,55 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - Trainer - Search Member
+{% endblock %}
+
+{% block content %}
+<div class="single">
+    {% if role == 'member' %}
+
+    <h2>Search Available Personal Trainers</h2>    
+
+    <form id='privatebooking' action="/member/private" method="POST">
+        <table>
+            <thead>
+                <td><label for='date'>Select Date</label></td>
+                <td><label for="time">Select Time</label></td>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="date" name="date" id='date' required></td>
+                    <td>
+                        <select name='time'>
+                        {% for t in time_slots %}
+                        <option value={{t[0]}}>{{t[0]}}-{{t[1]}}</option>
+                        {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <input id="btn" type="submit" value="Search">
+    </form>
+    <script>date.min = new Date().toISOString().split("T")[0];</script>
+
+
+    {% else %} 
+    <h6>Only members can book a private training session</h6>
+    {% endif %}
+
+    {% if results|length>0 %} 
+    
+    <hr>
+    <h2>The following trainers are available at {{time}} on {{date}}:</h2>
+    <table class="table table-borderless">
+        {%for t in results %}
+        <tr>
+            <td>{{t[1]}} {{t[2]}}</td>
+            <td><a id="btn" href="/member/private/booking?trainerid={{t[0]}}&starttime={{time}}&date={{date}}">Book an appointment</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+</div>
+{% endblock %}

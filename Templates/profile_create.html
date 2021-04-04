@@ -1,0 +1,111 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gyn - {{role}} - Create {{profile_type}} profile
+{% endblock %}
+
+{% block content %}
+
+    {% if profile_type == 'member' %}
+    <h1>Add New Member</h1>
+    {% else %}
+    <h1>Add New Trainer</h1>
+    <hr>
+    {% endif %}
+
+    <form action="/profile/create" method="POST" id='createProfile'>
+
+        <div class="form-row">
+            
+            <h6>PLEASE FILL OUT ALL FIELDS MARKED BY *asterisk*</h6>  
+            <div class="row">        
+                <div class="form-group col-md-3">
+                    <label for='username:'>*Username: </label>
+                    <input class="form-control" type="text" placeholder='username' name='username' required>
+                </div>
+                <div class="form-group col-md-3">                
+                    <label for='username:'>*Password: </label>
+                    <input class="form-control" type="password" placeholder='password' name='password' required aria-describedby="passwordHelpInline">
+                    <small id="passwordHelpInline" class="text-muted">At least 4 characters long.</small>
+                </div>
+            </div>
+
+            <div class="row">        
+                <div class="form-group col-md-3">
+                    <label for='firstname'>*First Name: </label>                    
+                    <input class="form-control" type="text" placeholder='First name' name='firstname' required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for='surname'>*Last Name: </label>
+                    <input class="form-control" type="text" placeholder='Last name' name='surname' required>            
+                </div>
+            </div>                                                        
+                    
+
+            <div class="row">        
+                <div class="form-group col-md-3">
+                    <label for='dob'>*Date of Birth: </label>                    
+                    <input class="form-control" type="date" name='dob' id='dob' required>                
+                </div>
+                <div class="form-group col-md-3">
+                    <label for='email'>*Email: </label>
+                    <input class="form-control" type="email" placeholder='you@email.com' name='email' required>                
+                </div>
+            </div>     
+
+
+            <div class="row">        
+                <div class="form-group col-md-3">
+                    <label for='joineddate'>*Join Date: </label>                                    
+                    <input class="form-control" type="date" name='joineddate' required>
+                </div>            
+            </div>     
+            
+            {% if profile_type == 'member' %}            
+            <div class="row"> 
+                <div class="form-group col-md-3">                                    
+                    <label for='payment'>*Payment Plan: </label>                                        
+                    <select class="form-select" name="paymentplan" required>
+                        <option selected>--Select Payment Plan--</option>
+                        <option value="Weekly"></option>
+                        <option value="Monthly"></option>
+                        <option value="Yearly"></option>
+                    </select>
+                    <input hidden value='member' name='user_role'> 
+                </div>
+            </div>
+
+            <div class="row">        
+                <div class="form-group col-md-3">                
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="True" id="flexCheckChecked" checked required>                    
+                        <label class="form-check-label" for='newsletter'>*Newsletters: </label>
+                        Subscribe
+                        </label>
+                    </div>                            
+                </div>               
+            </div>    
+
+            {% elif profile_type == 'trainer' %}
+            <div class="row"> 
+                <div class="form-group col-md-3">                    
+                    <label for='ptstarttime'>*Personal Training Available Time Starts: </label>
+                    <input class="form-control" type="time" name='starttime' required>                      
+                </div>
+            </div>  
+
+            <div class="row"> 
+                <div class="form-group col-md-3">                    
+                    <label for='ptendtime'>*Personal Training Available Time Ends </label>                    
+                    <input class="form-control" type="time" name="endtime" required>
+                    <input hidden value='trainer' name='user_role'>
+                </div>
+            </div>  
+            {% endif %}
+
+            <div class="form-group">
+                <input id="btn" type="submit" value="Add">
+                <input class="btn btn-outline-secondary" type="reset" value="Reset">
+            </div>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Booking PT Form
+{% endblock %}
+
+{% block content %}
+<div class="single">
+    {% if role == 'member' %}
+    <h1>Book Personal Training Session</h1>
+    <hr>
+    
+    <form action="/member/private/booking" method="POST" id='privatebookingconfirm'>
+        <h6>Please confirm your booking details:</h6>        
+        <table class='table table-borderless'>
+            <tr>
+                <td width="15%">Trainer Name:</td>
+                <td>{{trainerfirstname}} {{trainerlastname}}</td>
+            </tr>
+            <tr>
+                <td>Session Date:</td>
+                <td>{{date}}</td>
+            </tr>
+            <tr>
+                <td>Session Time:</td>
+                <td>{{time}}</td>
+            </tr>
+            <tr>
+                <td>Session Length:</td>
+                <td>1 hour</td>
+            </tr>
+            <tr>
+                <td>Price:</td>
+                <td>${{price}} NZD</td>
+            </tr>
+            <tr>
+                <td>Credit Card #</td>
+                <td><input class="form-group col-md-2" name='creditcard' type="text" placeholder="XXXX-XXXX-XXXX-XXXX" required minlength="19" maxlength="19"></td>
+            </tr>
+            <tr>
+                <td>Expiry Date:</td>
+                <td><input class="form-group col-md-2" name='expiry' type="text" placeholder="MM/YY" required minlength="5" maxlength="5"></td>
+            </tr>
+            <tr>
+                <td>CVV:</td>
+                <td><input class="form-group col-md-2" name='expiry' type="text" placeholder="XXX" required minlength="3" maxlength="3"></td>
+            </tr>
+            <tr>
+                <td>Notes:</td>
+                <td><textarea class="form-group col-md-2" name='notes' placeholder="Leave a note to the trainer"></textarea></td>
+            </tr>
+        </table>
+        <input name='trainerid' hidden value={{trainerid}}><!--Hidden values to be sent via POST request upon confirmation-->
+        <input name='memberid' hidden value={{memberid}}>
+        <input name='date' hidden value={{date}}>
+        <input name='time' hidden value={{time}}>
+        <input name='price' hidden value={{price}}>
+        <input id="btn" type="submit" value="Confirm">
+    </form>
+
+    {% else %}
+    <h6>Only members can book a private training session</h6>
+    {% endif %}
+</div>
+
+{% endblock %}

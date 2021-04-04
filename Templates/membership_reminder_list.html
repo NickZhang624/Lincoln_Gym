@@ -1,0 +1,44 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Membership Reminder List
+{% endblock %}
+
+{% block content %}
+<div class="single">
+
+
+    
+    {% if role == 'manager' %}
+    <h1>Membership Reminder List</h1>
+    <hr>
+
+    <form id='MembershipReminderList' action="/profile/reminder/list" method="POST">
+        <input id="btn" type="submit" value="Send reminder">
+        <table class="table table-hover">
+            <thead>
+                    <td>Member ID</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Join Date</td>
+                    <td style="font-weight: bold;">Membership expiry date</td>
+                    <td>Payment plan</td>
+                    <tbody>
+            </thead>
+                <input name="duedate" id="duedate" value='{{duedate}}' hidden>
+                {% for i in result %}
+                <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[2]}}-{{i[3]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td>{{i[6]}}</td>
+                    <td style="font-weight: bold; color: red;">{{i[11]}}</td>
+                    <td>{{i[12]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    {% endif %} 
+</div>
+
+{% endblock %}

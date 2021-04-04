@@ -1,0 +1,114 @@
+<!--COMP636 Project
+Author: John Yin
+ID: 114 8333
+Date: 10/2/2021-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Customisable Title-->
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{{url_for('static', filename='page.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='form.css')}}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='submit.js')}}"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Lincoln Gym</div>
+        </div>
+        <div class="topnav">
+            <!-- Navigation  bar -->
+            <ul class="nav-public">
+                <li class="nav-item-public">
+                    {% if role %}
+                    <a href="/logout">Log Out</a>
+                    {% else %}
+                    <a href="/login">Log In</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item-public">
+                    <a href="/class?class_type=group">Classes</a>
+                </li>
+                <li class="nav-item-public">
+                    <a href="#">Our Trainers</a>
+                </li>
+                <li class="nav-item-public">
+                    <a href="#">Membership</a>
+                </li>
+            </ul>
+
+            {% if role == "manager" %} <!--Nav Bar before Login ***Need to update this-->
+            <ul class="nav-user">
+                    <li class="nav-item-manager">
+                    <a href="/search?type=member">Manage Members</a>
+                </li>
+                <li class="nav-item-manager">
+                    <a href="/search?type=trainer">Manage Trainers</a>
+                </li>
+                <li class="nav-item-manager">
+                    <a href="/class?type=group">Manage Group Exercise</a>
+                </li>
+                <li class="nav-item-manager">
+                    <a href="/class?type=private">Manage Private Training</a>
+                </li>
+                <li class="nav-item-manager">
+                    <a href="/newsletter?type=subscription">Newsletter</a>
+                </li>  
+                <li class="nav-item-manager">
+                    <a href="/finance">Finances</a>
+                </li>  
+            </ul>    
+
+
+            {% elif role == "member" %}
+            <ul class="nav-user">
+                <li class="nav-item-member">
+                    <a href="/profile">Profile</a>
+                </li>
+                <li class="nav-item-member">
+                    <a href="/member/group">Group Exercise Booking</a>
+                </li>
+                <li class="nav-item-manager">
+                    <a href="/member/attendance">Attendance</a>
+                </li>
+                <li class="nav-item-member">
+                    <a href="/member/private">Private Training Booking</a>
+                </li>
+                <li class="nav-item-member">
+                    <a href="/member/pay">Pay Online</a>
+                </li>
+            </ul>
+
+            {% elif role == "trainer" %}
+            <ul class="nav-user">
+                <li class="nav-item-trainer">
+                    <a href="/profile">Profile</a>
+                </li>
+                <li class="nav-item-trainer">
+                    <a href="/trainer/groupclass">Group Exercise</a>
+                </li>
+                <li class="nav-item-trainer">
+                    <a href="#">Private Training</a>
+                </li>
+                <li class="nav-item-trainer">
+                    <a href="/search?type=member">Search Member</a>
+                </li>  
+            </ul>
+            {% endif %}
+        </div>
+        <!--Customisable content-->
+        <div class="content">
+        {% block content %}{% endblock%}
+        </div>
+
+        <footer>
+            <p>© 2021 Lincoln Gym</p>
+        </footer>
+
+    </div>
+</body>
+</html>

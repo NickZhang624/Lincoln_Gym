@@ -1,0 +1,28 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gym - {{role}} - Update Group Exercise
+{% endblock %}
+
+{% block content %}
+
+<div class="single">    
+    <form action="/groupexercise/create" method="POST" id='createGroupExercise'>
+        <label id="groupclassname" for="groupclassname">Group Class Name:</label>
+        <input type="text" id="groupclassname" name="groupclassname" required="required"/><br><br>
+        
+        <label id="groupclassstartdate" for="groupclassstartdate">Group Class Start Date:</label>
+        <input type="date" id="groupclassstartdate" name="groupclassstartdate" required="required"/><br><br>
+    
+        <label id="groupclasssenddate" for="groupclasssenddate">Group Class End Date:</label>
+        <input type="date" id="groupclasssenddate" name="groupclasssenddate" required="required"/><br><br><br>
+
+        <label id="description" for="description">Description:</label>
+        <input type="text" id="description" name="description" required="required"/><br><br>
+
+        <input type="submit" value="Add">
+        <input type="reset">
+    </form>
+    {% endif %}
+</div>
+
+{% endblock %}

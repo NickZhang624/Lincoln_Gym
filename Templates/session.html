@@ -1,0 +1,40 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Group Exercise Classes
+{% endblock %}
+
+
+<!-- what is this page showing?? -->
+{% block content %}
+<div class="single">
+
+    {% if role=='trainer' %}
+    <h1>Group Exercercise Session</h1>
+    <hr>
+
+    
+    <table class='table table-hover table-striped'>
+        <thead>
+            <th>Class Name</th>
+            <th>Session Date</th>
+            <th>Session Time</th>
+            <th>Booking</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for session in results %}
+            <tr>
+                <td>{{session[1]}}</td>
+                <td>{{session[2]}}</td>
+                <td>{{session[3]}} - {{session[4]}}</td>
+                <td>{{session[5]}} / 30</td>
+                <td><a href="/member/attendance?sessionid={{session[0]}}">Manage Attendance</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</div>
+
+{% endblock %}

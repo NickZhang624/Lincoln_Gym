@@ -1,0 +1,46 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gym - {{role}} - Update Group Exercise
+{% endblock %}
+
+{% block content %}
+
+<div class="single">
+    <form action="/groupexercise/update" method="POST" id='UpdateGroupExercise'>
+        <table>
+            <thead>
+                <tr>
+                    <td>Group Session ID</td>
+                    <td>Group Class Name</td>
+                    <td>Group Session Date</td>
+                    <td>Group Session Time</td>
+                    <td>Trainer Name</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in groupexercisedetails %}
+                <tr>
+                    <input value={{i[0]}} name="groupsessionid" id="groupsessionid" hidden>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[1]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td>{{i[5]}} ~ {{i[6]}}</td>
+                    <td>
+                        <select name="trainerid">
+                        {% for n in trainer_result%}
+                        {% if n[0] == i[7] %}
+                            <option selected value={{n[0]}}>{{i[2]}} {{i[3]}}</option>
+                        {% else %}
+                            <option value={{n[0]}}>{{n[1]}}</option>
+                        {% endif %}
+                        {% endfor %}
+                        </select>
+                    </td>                   
+                </tr>
+                {% endfor %}
+        </table>
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+{% endblock %}

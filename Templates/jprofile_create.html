@@ -1,0 +1,76 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gyn - {{role}} - Create {{profile_type}} profile
+{% endblock %}
+
+{% block content %}
+
+<div class="single">
+    <form action="/profile/create" method="POST" id='createProfile'>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Username</td>
+                    <td><input type="text" placeholder='username' name='username' required></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" placeholder='password' name='password' required></td>
+                </tr>
+                <tr>
+                    <td>First Name</td>
+                    <td><input type="text" placeholder='first name' name='firstname' required></td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td><input type="text" placeholder='last name' name='surname' required></td>
+                </tr>
+                <tr>
+                    <td>Date of Birth</td>
+                    <td><input type="date" name='dob' id='dob' required></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="email" placeholder='email' name='email' required></td>
+                </tr>
+                <tr>
+                    <td>Join Date</td>
+                    <td><input type="date" name='joineddate' required></td>
+                </tr>
+                {% if profile_type == 'member' %}
+                    <!--<td><label>Expiry Date</label><input type="date" name='expirydate'></td>-->
+                <tr>
+                    <td><label for='newsletter'>Newsletter: </label>
+                        <input type='radio' value='True' name='newsletter' required><label>Yes</label>
+                        <input type='radio' value='False' name='newsletter' ><label>No</label></td>
+                </tr>
+                <tr>
+                    <td><label for='payment'>Payment Plan: </label>
+                        <input type='radio' value='Weekly' name='payment' required><label>weekly</label>
+                        <input type='radio' value='Monthly' name='payment' ><label>monthly</label>
+                        <input type='radio' value='Yearly' name='payment'><label>yearly</label>
+                        <input hidden value='member' name='user_role'></td>
+                </tr>
+                {% elif profile_type == 'trainer' %}
+                <tr>
+                    <td>Personal Training Available Time Starts: </td>
+                    <td><input type="time" name='starttime' required></td>
+                </tr>
+                <tr>
+                    <td>Personal Training Available Time Ends </td>
+                    <td>
+                        <input type="time" name="endtime" required>
+                        <input hidden value='trainer' name='user_role'>
+                    </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Add">
+                        <input type="reset"></td>
+                </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}

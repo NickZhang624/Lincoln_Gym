@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Customisable Title-->
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../Static/animate.css">
+	<link rel="stylesheet" type="text/css" href="../Static/stylepublic.css">
+    <link href="{{url_for('static', filename='page.css')}}" rel="stylesheet" />
+    
+    <!-- bootstrap  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='animate.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+`   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Transpose Javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    
+    <!-- Chart script-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+
+<style>
+    .wow:first-child {
+        visibility: hidden;
+    }
+</style>
+
+<!-- Transpose script -->
+<script>
+$( document ).ready(function() {
+$("#tableID").each(function() {
+        var $this = $(this);
+        var newTransposedRow = [];
+        $this.find("tr").each(function(){
+            var i = 0;
+            $(this).find("td").each(function(){
+                i++;
+                if(newTransposedRow[i] === undefined) { newTransposedRow[i] = $("<tr></tr>"); }
+                newTransposedRow[i].append($(this));
+            });
+        });
+        $this.find("tr").remove();
+        $.each(newTransposedRow, function(){
+            $this.append(this);
+        });
+    });
+});
+</script>
+
+</head>
+<body>
+
+<!-- start container -->
+<div class="container"> 
+    
+    <!-- start header -->
+    <header>
+        <div class="topfixed">
+            <div class="logo">
+                <a href="">Lincoln <span>Gym</span></a>
+            </div>
+            <!-- <span></span>	
+            <span></span> -->
+            <!-- Public Nav Bar -->
+            <div class="topnav">
+                <a  class="active" href="/#header">Home</a>
+                <a href="/#schedule">Our classes</a>
+                <a href="/#trainers">Our Trainers</a>
+                <a href="/#membership">Membership</a>
+                <a href="/#contact">Contact</a>
+                {% if role %}
+                <a href="/logout">Log Out</a>
+                {% else %}
+                <a href="/#login">Log In</a>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Start header image-->
+ <section class="home wow flash" id="header">
+	<div class="container">
+		<h1 class="wow slideInLeft" data-wow-delay="1s"> Get <span>fit</span> now! </h1>
+		<h1 class="wow slideInRight" data-wow-delay="1s">Come in and <span>work out </span>today.</h1>
+	</div>
+</section>
+<!-- End Home -->
+    </header>
+    <!-- end header -->
+
+
+    <!-- Navbar user -->
+    <div class="nav-user">            
+        <div class="blackwhite"></div>
+        
+        {% if role == "manager" %}            
+        <div class="collapse navbar-collapse show" id="navbarSupportedContent">
+        <ul class="nav-user">
+            <!-- STARTING OF nav-item-manager -->
+            <li class="nav-item-manager">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Reports
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/finance"> Reports</a>
+                </div>
+            </li>   
+            <li class="nav-item-manager">
+                <a class="nav-link dropdown-toggle nav-trainer" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Manage Members
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/search?type=member">Search A Member</a>
+                    <a class="dropdown-item" href="/profile/create?type=member">Add New Member</a>
+                    <a class="dropdown-item"  href='/profile/all?usertype=member' type="submit">See All Members</a>
+                    <a class="dropdown-item" href='/profile/reminder?usertype=member'>Membership renewal reminder</a>   
+
+                </div>
+            </li>                        
+            <li class="nav-item-manager">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Manage Trainers
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/search?type=trainer">Search A Trainer</a>
+                    <a class="dropdown-item" href="/profile/create?type=trainer">Add New Trainer</a>
+                    <a class="dropdown-item" href="/profile/all?usertype=trainer">See All Trainers</a>                            
+                </div>
+            </li>    
+            <li class="nav-item-manager">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Manage Classes
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/class?type=group">All Group Exercises</a>
+                    <a class="dropdown-item" href="groupexercise/create">Add Group Exercise</a>
+                    <div class="dropdown-divider"></div>
+                    <!-- TODO: View PT >> doesn't link to PT classes -->
+                    <a class="dropdown-item" href="/class?type=private">View Personal Training Sessions</a>                            
+                </div>
+            </li>  
+
+            <li class="nav-item-manager">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Newsletters
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/newsletter?type=subscription">Send Newsletters</a>
+                </div>
+            </li>                      
+            </ul>    
+        </div>
+
+        {% elif role == "member" %}
+        <div class="collapse navbar-collapse show" id="navbarSupportedContent">
+            <ul class="nav-user">
+                <li class="nav-item-member">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/profile">View/Update Profile</a>                        
+                    </div>
+                </li>           
+                <li class="nav-item-member">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Book A Class
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {# Book GE route doesn't work #}
+                        <a class="dropdown-item" href="/member/group">Book Group Exercise</a>
+                        <a class="dropdown-item" href="/member/private">Book PT Session</a>                                                                 
+                    </div>
+                </li>     
+                
+                <li class="nav-item-member">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Updance Attendance
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/member/attendance">Group Exercise Attendance</a>
+                    </div>
+                </li>  
+                
+                <li class="nav-item-member">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Pay Online
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/member/pay">Pay My Subscription</a>
+                    </div>
+                </li>                                        
+            </ul>
+        </div>
+
+        {% elif role == "trainer" %}            
+        <div class="collapse navbar-collapse show" id="navbarSupportedContent">
+        <ul class="nav-user">                                           
+            <li class="nav-item-trainer">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/profile">View/Update Profile</a>
+                </div>
+            </li>                 
+            
+            <li class="nav-item-trainer">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Group Exercises
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/trainer/groupclass">My Future Classes</a>                           
+                </div>
+
+            </li>   
+            
+            <li class="nav-item-trainer">                    
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Personal Training
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">My PT Sessions</a>
+                </div>
+            </li>                                          
+            
+            <li class="nav-item-trainer">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Search Members
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {# members in my class route is every members of this gym #}
+                    <a class="dropdown-item" href="/member/allmembers">Members In My Classes</a>                    
+                    <a class="dropdown-item" href="/search?type=member">Search A Member</a>
+                </div>
+
+            
+        </li>                      
+        </ul>
+        </div>
+        {% endif %}            
+    </div>
+    <!-- End Navbar user   -->
+
+    <!--Customisable content-->
+    <div class="content">
+        {% block content %}{% endblock%}
+    </div>
+    <!-- End customisable content -->
+   
+    <!-- footer -->
+        <footer class="container">
+            <p>© 2021 Lincoln Gym</p>
+        </footer> 
+    <!-- end footer  -->
+</div>                                       
+ <!-- end container -->
+
+ <!-- Starting of jquery for homepage -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+    
+    $(".accordian-pcontainer").click(function(){
+        $(".accordian-pcontainer").children(".body").slideUp();
+        $(".accordian-pcontainer").removeClass("active")
+        $(".accordian-pcontainer").children(".head").children("span").removeClass("fa-angle-down").addClass("fa-angle-up")
+        $(this).children(".body").slideDown();
+        $(this).addClass("active")
+        $(this).children(".head").children("span").removeClass("fa-angle-up").addClass("fa-angle-down")
+    });
+
+            // add active class in navigation
+            $(".nav ul li a").removeClass("active")
+            $(this).addClass("active")
+        }
+    })
+})
+
+</script>
+<script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+<script>
+        wow = new WOW(
+        {
+            animateClass: 'animated',
+            offset:       0,
+        }
+        );
+        wow.init();
+</script>
+<!-- End of jquery -->
+
+</body>
+</html>

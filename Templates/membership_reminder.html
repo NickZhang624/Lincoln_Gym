@@ -1,0 +1,22 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Membership Reminder
+{% endblock %}
+
+{% block content %}
+<div class="single">
+    {% if role == 'manager' %}
+    <h1>Membership Reminder</h1>
+    <hr>
+
+    <h6>Select a date to view membership renewal status</h6>
+        <form id='MembershipReminder' action="/profile/reminder" method="POST">
+            <input type="date" name='date' id='date' required>
+            <input id="btn" type="submit" value="Search">
+        </form>
+        
+        <script>date.min = new Date().toISOString().split("T")[0];
+        </script>
+    {% endif %} 
+</div>
+{% endblock %}

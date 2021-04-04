@@ -1,0 +1,43 @@
+{% extends 'main_layout.html' %}
+{% block title %} 
+Lincoln Gym - {{role}} - Create Group Exercise
+{% endblock %}
+
+{% block content %}
+<!-- no user-navbar??? -->
+
+    <h1>Create New Group Exercise</h1>
+    <hr>
+
+    <form action="/groupexercise/create" method="POST" id='createGroupExercise'>
+
+        <h6>PLEASE FILL OUT ALL FIELDS MARKED BY *asterisk*</h6>  
+        <div class="row">            
+            <div class="form-group col-md-3">
+                <label id="groupclassname" for="groupclassname">*Group Name:</label>
+                <input class="form-control" type="text" id="groupclassname" name="groupclassname" placeholder="Lincoln Fit" required="required"/>
+            </div>            
+        </div>
+        
+        <div class="row">            
+            <div class="form-group col-md-3">
+                <label id="groupclassstartdate" for="groupclassstartdate">*Group Class Start Date:</label>
+                <input class="form-control" type="date" id="groupclassstartdate" name="groupclassstartdate" required="required"/>                
+            </div>
+            <div class="form-group col-md-3">
+                <label id="groupclasssenddate" for="groupclasssenddate">*Group Class End Date:</label>
+                <input class="form-control" type="date" id="groupclasssenddate" name="groupclasssenddate" required="required"/>                
+            </div>                                    
+        </div>            
+
+        <div class="row">        
+            <div class="form-group col-md-3">
+                <label id="description" for="description">*Description:</label>
+                <textarea class="form-control" type="text" id="description" name="description" required="required" placeholder="Enter your description here..."></textarea>
+            </div>
+        </div>                                       
+
+        <input type="button" id="btn" value='Add'/>        
+        <input type="reset" class="btn btn-outline-secondary"/>
+    </form>
+{% endblock %}

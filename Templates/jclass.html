@@ -1,0 +1,81 @@
+{% extends 'main_layout.html' %}
+{% block title %}
+Lincoln Gym - {{role}} - Group Exercise Classes
+{% endblock %}
+
+{% block content %}
+<div class="single">
+{% if role=='trainer' %}
+<table class='table table-hover table-striped'>
+    <thead>
+        {% for col in cols[1:] %}
+        <td>{{col}}</td>
+        {% endfor %}
+        <td></td>
+    </thead>
+    <tbody>
+        {% for class in classes %}
+        <tr>
+            <td>{{class[1]}}</td>
+            <td>{{class[2]}}</td>
+            <td>{{class[3]}}</td>
+            <td><a href="/trainer/groupclass/session?classid={{class[0]}}">View Sessions</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% elif role=='member' %}
+    <table class='table table-striped table-hover'>
+        <thead>
+            <tr>
+                <td>Group Class Name</td>
+                <td>Trainer Name</td>
+                <td>Description</td>
+                <td>Booking Status</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in classes %}
+            {% if classtype=='group' %}
+            <tr>
+            <td>{{c[0]}}</td>
+            <td>{{c[1]}}{{c[2]}}</td>
+            <td>{{c[3]}}</td>
+            <td>{{c[4]}}/30</td> </tr>
+            {% elif classtype=='private' %}
+            <tr>
+            <td>{{c[0]}}</td>
+            <td>{{c[1]}}</td>
+            <td>{{c[2]}}</td>
+            <td>{{c[3]}}</td>
+            <td>{{c[4]}}</td>
+            <td>{{c[5]}}</td>
+            <td>{{c[6]}}</td></tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+
+<table class='table table-hover table-striped'>
+    <thead>
+        <td>Group Class Name</td>
+        <td>Description</td>
+    </thead>
+    <tbody>
+        {% for class in classes %}
+        <tr>
+            <td>{{class[0]}}</td>
+            <td>{{class[3]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+</div>
+
+{% endblock %}
